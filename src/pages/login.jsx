@@ -1,6 +1,19 @@
 import React from 'react'
+import {useFormik} from 'formik' ;
+
 
 function Login() {
+
+  const loginForm = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+
+    onSubmit: (values) => {
+      console.log(values);
+    }
+  })
   return (
     <section className="vh-100">
   <div className="container-fluid h-custom">
@@ -13,7 +26,7 @@ function Login() {
         />
       </div>
       <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
+        <form onSubmit={loginForm.handleSubmit}>
           <div className="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
             <p className="lead fw-normal mb-0 me-3">Sign in with</p>
             <button type="button" className="btn btn-primary btn-floating mx-1">
@@ -36,7 +49,9 @@ function Login() {
             </label>
             <input
               type="email"
-              id="form3Example3"
+              id="email"
+              onChange={loginForm.handleChange}
+              value={loginForm.values.email}
               className="form-control form-control-lg"
               placeholder="Enter a valid email address"
             />
@@ -48,7 +63,9 @@ function Login() {
             </label>
             <input
               type="password"
-              id="form3Example4"
+              id="password"
+              onChange={loginForm.handleChange}
+              value={loginForm.values.password}
               className="form-control form-control-lg"
               placeholder="Enter password"
             />
