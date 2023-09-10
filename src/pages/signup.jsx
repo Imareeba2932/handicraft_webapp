@@ -1,7 +1,19 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import {Link, useNavigate} from 'react-router-dom';
+import * as Yup from 'yup';
+
+const SignupSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string().email('Email is invalid').required('Required'),
+});
 
 function Signup() {
+
+  const navigate = useNavigate();
 
   const signupForm = useFormik({
     initialValues: {
@@ -13,7 +25,10 @@ function Signup() {
 
     onSubmit: (values) => {
       console.log(values);
-    }
+      navigate('/login');
+    },
+
+    validationSchema: SignupSchema
   })
 
   return (
@@ -35,6 +50,8 @@ function Signup() {
                           <label className="form-label" htmlFor="form3Example1c">
                             Your Name
                           </label>
+
+                          <span style={{color: 'red', fontSize: 10, marginLeft: 10}}>{signupForm.touched.name && signupForm.errors.name}</span>
                           <input
                             type="text"
                             id="name"
@@ -50,6 +67,7 @@ function Signup() {
                           <label className="form-label" htmlFor="form3Example3c">
                             Your Email
                           </label>
+                          <span style={{color: 'red', fontSize: 10, marginLeft: 10}}>{signupForm.touched.email && signupForm.errors.email}</span>
                           <input
                             type="email"
                             id="email"
@@ -82,7 +100,7 @@ function Signup() {
                           </label>
                           <input
                             type="password"
-                            id="password"
+                            id="reppassword"
                             onChange={signupForm.handleChange}
                             value={signupForm.values.reppassword}
                             className="form-control"

@@ -8,6 +8,7 @@ import AddProduct from './pages/AddProduct';
 import ViewProduct from './pages/ViewProduct';
 import './App.css';
 import NotFound from './pages/NotFound';
+import ManageProduct from './pages/manage';
 
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
           <Route path="Signup" element={<Signup />}/>
           <Route path="BrowseProduct" element={<BrowseProduct />}/>
           <Route path="AddProduct" element={<AddProduct />}/>
-          <Route path="ViewProduct" element={<ViewProduct />}/>
+          <Route path="ViewProduct/:index" element={<ViewProduct />}/>
           <Route path="*" element={<NotFound />}/>
+          <Route path="manage" element={<ManageProduct />}/>
 
         </Routes>
       </main>

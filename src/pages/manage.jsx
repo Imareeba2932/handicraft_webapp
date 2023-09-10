@@ -1,36 +1,44 @@
 import React, { useEffect, useState } from "react";
 import localData from "./DummyData";
-import {Link} from 'react-router-dom';
 
-const Browse = () => {
+const ManageProduct = () => {
   const localData = JSON.parse(localStorage.getItem('productData'));
-  const [productData, setProductData] = useState(localData !== null ? localData : [] );
+  const [productData, setProductData] = useState(localData !== null ? localData : []);
 
-  const brands = ["Wooden", "Plastic", "Iron", "Bronze", "Brass", "Metal", "Polystone"];
+  const brands = ["Asus", "Acer", "HP", "Dell", "Lenovo"];
 
   const [selOptions, setSelOptions] = useState([]);
 
-  const formatName = (text) => {
-    return text.slice(0, 60) + (text.length > 60 ? '...' : '');
-  }
-
   const product = () => {
     return productData.map((product, index) => (
-      <div className="col-md-4 mb-4">
-        <div className="card">
-          <img style={{height: 250, objectFit: 'cover'}} className="card-img-top" src={product.image} alt="" />
-          <div className="card-body" style={{minHeight:200}}>
-            <p className="text-muted m-0">{product.category}</p>
-            <h5 className="m-0">{formatName(product.name)}</h5>
-            <h4 className="mt-3">₹{product.prize}</h4>
-          </div>
-          <div className="card-footer">
-            <Link className="btn btn-primary" to={'/ViewProduct/'+index}>View Details</Link>
-          </div>
-        </div>
-      </div>
+      <tr>
+        <td>
+          <img style={{height: 50}} src={product.image} alt="" />
+          </td>
+        <td>{product.name}</td>
+        <td>{product.prize}</td>
+        <td>{product.material}</td>
+        <td>{product.category}</td>
+        <td>{product.description}</td>
+        <td>
+        <button className="btn btn-danger" onClick={() => {deleteProduct(index)}}>Delete</button>
+        </td>
+      </tr>
     ));
   };
+
+  const deleteProduct = (index) => {
+    console.log(index);
+
+    // todoList.splice(index, 1);  don't do this since its readonly
+
+    const temp = productData;
+    temp.splice(index, 1);
+
+    setProductData([...temp]);
+    localStorage.setItem('productData', JSON.stringify(temp));
+
+  }
 
 
   const searchProduct = (e) => {
@@ -68,20 +76,14 @@ const Browse = () => {
 
   return (
     <div>
-      <header className="bgimg text-white">
-        <div className="container py-3">
-          <h1 className="text text-center">Browse Product</h1>
+      <header className="bg-dark text-white">
+        <div className="container py-5">
+          <h1 className="">Manage Product</h1>
           <hr />
-          <input  type="text" className="input form-control" onChange={searchProduct} />
 
           <div className="row mt-4">
             <div className="col-md-4">
-              <select className="form-control" onChange={filterBrand}>
-                <option value="">Select Brand</option>
-                {brands.map((b) => (
-                  <option value={b}>{b}</option>
-                ))}
-              </select>
+
             </div>
 
             {/* <div className="col-md-4 my-auto">
@@ -96,15 +98,28 @@ const Browse = () => {
 
 
 
-      <div className="container mt-4">
-        <div className="row">
-          {product()}
+      <div className="container mt-5">
 
-
-        </div>
+        <table className="table table-dark">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Material</th>
+              <th>Category</th>
+              <th colSpan={2}>Description</th>
+            </tr>
+          </thead>
+          <tbody>   
+            {product()}
+          </tbody>
+        </table>
       </div>
+
     </div>
+    
   );
 };
 
-export default Browse;
+export default ManageProduct;

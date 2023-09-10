@@ -5,13 +5,13 @@ const Navbar = () => {
   return (
     <>
   {/* Navbar */}
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     {/* Container wrapper */}
     <div className="container">
       {/* Navbar brand */}
       <a className="navbar-brand me-2" href="https://mdbgo.com/">
         <img
-          src="/web.png"
+          src="/logo2.png"
           height={50}
           alt="MDB Logo"
           loading="lazy"
